@@ -1,0 +1,22 @@
+{
+  "name": "mmlg-telegram-bot",
+  "version": "0.0.1",
+  "description": "Modular Multi-Language Telegram Bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Perkovec/mmlg-telegram-bot.git"
+  },
+  "author": "Perkovec",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Perkovec/mmlg-telegram-bot/issues"
+  },
+  "homepage": "https://github.com/Perkovec/mmlg-telegram-bot#readme",
+  "dependencies": {
+    "popsicle": "^8.1.1"
+  }
+}

@@ -21,6 +21,10 @@ class TelegramAPI extends EventEmitter {
     this._callApi('sendMessage', data);
   }
 
+  sendChatAction(data) {
+    this._callApi('sendChatAction', data);
+  }
+
   _callApi(method, data) {
     return popsicle.request({
       method: 'POST',

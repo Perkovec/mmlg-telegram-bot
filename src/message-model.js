@@ -15,6 +15,10 @@ class Message {
     this.sendMessage = data => {
       this.chat.sendMessage(data);
     };
+
+    this.sendChatAction = action => {
+      this.chat.sendChatAction(action);
+    };
   }
 }
 

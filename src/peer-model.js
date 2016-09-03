@@ -14,6 +14,13 @@ class Peer {
       const reqData = Object.assign(data, {chat_id: this.id});
       api.sendMessage(reqData);
     };
+
+    this.sendChatAction = action => {
+      api.sendChatAction({
+        chat_id: this.id,
+        action
+      });
+    };
   }
 }
 

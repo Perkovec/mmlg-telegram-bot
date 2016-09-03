@@ -12,8 +12,8 @@ class Message {
   }
 
   _registerMethods(api) {
-    this.sendMessage = text => {
-      this.chat.sendMessage(text);
+    this.sendMessage = data => {
+      this.chat.sendMessage(data);
     };
   }
 }

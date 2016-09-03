@@ -10,8 +10,9 @@ class Peer {
   }
 
   _registerMethods(api) {
-    this.sendMessage = text => {
-      api.sendMessage(this.id, text);
+    this.sendMessage = data => {
+      const reqData = Object.assign(data, {chat_id: this.id});
+      api.sendMessage(reqData);
     };
   }
 }

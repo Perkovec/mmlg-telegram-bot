@@ -17,11 +17,8 @@ class TelegramAPI extends EventEmitter {
     });
   }
 
-  sendMessage(chat_id, text) {
-    this._callApi('sendMessage', {
-      chat_id: chat_id,
-      text: text
-    });
+  sendMessage(data) {
+    this._callApi('sendMessage', data);
   }
 
   _callApi(method, data) {

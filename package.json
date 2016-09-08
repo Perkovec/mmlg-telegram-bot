@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Perkovec/mmlg-telegram-bot#readme",
   "dependencies": {
     "colors": "^1.1.2",
+    "lua.vm.js": "0.0.1",
     "popsicle": "^8.1.1"
   }
 }

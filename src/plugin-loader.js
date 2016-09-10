@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const colors = require('colors');
 const LuaVM = require('lua.vm.js');
+const TGLuaAPI = require('./tg-lua-wrapper');
 
 const luaState = new LuaVM.Lua.State();
 
@@ -61,8 +62,7 @@ class PluginLoader {
         const pattern = new RegExp(pluginPattern, pluginPatternFlags);
         if (plugin.get('trigger') === 'command' && pattern.test(msg.text)) {
           const mainFunction = plugin.get('main');
-          mainFunction.L._G.set('msg', msg);
-          mainFunction.invoke([], 0);
+          mainFunction.invoke([TGLuaAPI(msg)], 0);
         }
       }
     }

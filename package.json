@@ -11,7 +11,7 @@
     "url": "git+https://github.com/Perkovec/mmlg-telegram-bot.git"
   },
   "author": "Perkovec",
-  "license": "GPL-3.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Perkovec/mmlg-telegram-bot/issues"
   },

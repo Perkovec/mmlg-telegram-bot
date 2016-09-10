@@ -21,6 +21,10 @@ class Peer {
         action
       });
     };
+
+    this.clone = () => {
+      return new this.constructor(api, this);
+    }
   }
 }
 

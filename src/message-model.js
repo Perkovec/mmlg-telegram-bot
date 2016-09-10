@@ -19,6 +19,10 @@ class Message {
     this.sendChatAction = action => {
       this.chat.sendChatAction(action);
     };
+
+    this.clone = () => {
+      return new this.constructor(api, this);
+    }
   }
 }
 

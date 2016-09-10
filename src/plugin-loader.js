@@ -62,7 +62,11 @@ class PluginLoader {
         const pattern = new RegExp(pluginPattern, pluginPatternFlags);
         if (plugin.get('trigger') === 'command' && pattern.test(msg.text)) {
           const mainFunction = plugin.get('main');
+          try{
           mainFunction.invoke([TGLuaAPI(msg)], 0);
+          } catch(e) {
+            console.log(e)
+          }
         }
       }
     }

@@ -9,14 +9,14 @@ const luaState = new LuaVM.Lua.State();
 const pluginsPath = path.join(__dirname, '../plugins');
 
 class PluginLoader {
-  constructor() {
+  constructor(client) {
     this.plugins = {
       javascript: [],
-      lua: [],
-      python: []
+      lua: []
     };
 
     this._loadPlugins();
+    this._clientLua = TGLuaAPI.api(client);
   }
 
   _loadPlugins() {
@@ -51,7 +51,7 @@ class PluginLoader {
       for (let i = 0; i < this.plugins.javascript.length; ++i) {
         const plugin = this.plugins.javascript[i];
         if (plugin.trigger === 'command' && plugin.pattern.test(msg.text)) {
-          plugin.main.call(null, msg);
+          plugin.main.call(null, msg, this._client);
         }
       }
 
@@ -63,7 +63,7 @@ class PluginLoader {
         if (plugin.get('trigger') === 'command' && pattern.test(msg.text)) {
           const mainFunction = plugin.get('main');
           try{
-          mainFunction.invoke([TGLuaAPI(msg)], 0);
+            mainFunction.invoke([TGLuaAPI.message(msg), this._clientLua], 0);
           } catch(e) {
             console.log(e)
           }

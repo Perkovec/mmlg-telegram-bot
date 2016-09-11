@@ -5,50 +5,57 @@ class TelegramAPI extends EventEmitter {
   constructor(token) {
     super();
     this.token = token;
-    this.requestUrl = `https://api.telegram.org/bot${token}/`;
+    this._requestUrl = `https://api.telegram.org/bot${token}/`;
     this._polling = {
       offset: 0,
       interval: 200
     };
-    this.lastPoll = null;
-    this._testToken().then(isAuth => {
-      if (!isAuth) return console.log('Unauthorized');
-      this._startPolling();
-    });
+    this._lastPoll = null;
+    this._registerEvents();
   }
 
-  sendMessage(data) {
-    this._callApi('sendMessage', data);
+  start() {
+    this._startPolling();
   }
 
-  sendChatAction(data) {
-    this._callApi('sendChatAction', data);
+  _registerEvents() {
+    this.sendMessage = data => {
+      this._callApi('sendMessage', data);
+    }
+
+    this.sendChatAction = data => {
+      this._callApi('sendChatAction', data);
+    }
   }
 
   _callApi(method, data) {
     return popsicle.request({
       method: 'POST',
-      url: this.requestUrl + method,
+      url: this._requestUrl + method,
       body: data
     })
   }
 
   _testToken() {
     return new Promise((resolve, reject) => {
-      popsicle.get(this.requestUrl + 'getMe')
-      .then(function (res) {
-        if (res.status !== 200) return console.log('Something went wrong');
-        const body = JSON.parse(res.body);
-        resolve(body.ok);
+      popsicle.get(this._requestUrl + 'getMe')
+      .then(res => {
+        if (res.status !== 200) {
+          reject();
+        } else if (JSON.parse(res.body).ok) {
+          resolve(body.ok);
+        } else {
+          reject(this);
+        }
       });
     });
   }
 
   _getUpdates(updatePoll) {
-    if (updatePoll) this.lastPoll = new Date();
+    if (updatePoll) this._lastPoll = new Date();
     popsicle.request({
       method: 'POST',
-      url: this.requestUrl + 'getUpdates',
+      url: this._requestUrl + 'getUpdates',
       body: {
         offset: this._polling.offset
       }
@@ -68,7 +75,7 @@ class TelegramAPI extends EventEmitter {
           if (body.result.length === 100) return this._getUpdates();
         }
 
-        const timeDiff = new Date() - this.lastPoll;
+        const timeDiff = new Date() - this._lastPoll;
         if (timeDiff >= this._polling.interval) {
           this._getUpdates(true);
         } else {

@@ -8,7 +8,12 @@ const sendMessageFields = [
   'reply_markup',
 ];
 
-module.exports = msg => {
+const sendChatActionFields = [
+  'chat_id',
+  'action',
+];
+
+module.exports.message = msg => {
   const copied = msg.clone();
 
   // MESSAGE
@@ -54,3 +59,25 @@ module.exports = msg => {
 
   return copied;
 };
+
+module.exports.api = api => {
+  function table2object(table, scheme) {
+    const data = {};
+    for (let i = 0; i < scheme.length; ++i) {
+      const field = table.get(scheme[i]);
+      if (field) data[scheme[i]] = field;
+    }
+    return data;
+  }
+
+  return {
+    sendMessage(table) {
+      const data = table2object(table, sendMessageFields)
+      api.sendMessage(data);
+    },
+    sendChatAction(table) {
+      const data = table2object(table, sendChatActionFields);
+      api.sendChatAction(data);
+    }
+  };
+}

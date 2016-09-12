@@ -13,16 +13,21 @@ const sendChatActionFields = [
   'action',
 ];
 
+function table2object(table, scheme) {
+  const data = {};
+  for (let i = 0; i < scheme.length; ++i) {
+    const field = table.get(scheme[i]);
+    if (field) data[scheme[i]] = field;
+  }
+  return data;
+}
+
 module.exports.message = msg => {
   const copied = msg.clone();
 
   // MESSAGE
   copied.sendMessage = table => {
-    const data = {};
-    for (let i = 0; i < sendMessageFields.length; ++i) {
-      const field = table.get(sendMessageFields[i]);
-      if (field) data[sendMessageFields[i]] = field;
-    }
+    const data = table2object(table, sendMessageFields)
     msg.sendMessage(data);
   }
 
@@ -32,11 +37,7 @@ module.exports.message = msg => {
 
   // PEER
   copied.from.sendMessage = table => {
-    const data = {};
-    for (let i = 0; i < sendMessageFields.length; ++i) {
-      const field = table.get(sendMessageFields[i]);
-      if (field) data[sendMessageFields[i]] = field;
-    }
+    const data = table2object(table, sendMessageFields)
     msg.from.sendMessage(data);
   }
 
@@ -45,11 +46,7 @@ module.exports.message = msg => {
   }
 
   copied.chat.sendMessage = table => {
-    const data = {};
-    for (let i = 0; i < sendMessageFields.length; ++i) {
-      const field = table.get(sendMessageFields[i]);
-      if (field) data[sendMessageFields[i]] = field;
-    }
+    const data = table2object(table, sendMessageFields)
     msg.chat.sendMessage(data);
   }
 
@@ -61,15 +58,6 @@ module.exports.message = msg => {
 };
 
 module.exports.api = api => {
-  function table2object(table, scheme) {
-    const data = {};
-    for (let i = 0; i < scheme.length; ++i) {
-      const field = table.get(scheme[i]);
-      if (field) data[scheme[i]] = field;
-    }
-    return data;
-  }
-
   return {
     sendMessage(table) {
       const data = table2object(table, sendMessageFields)

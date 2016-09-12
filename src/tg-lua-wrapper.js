@@ -13,6 +13,13 @@ const sendChatActionFields = [
   'action',
 ];
 
+const forwardMessageFields = [
+  'chat_id',
+  'from_chat_id',
+  'disable_notification',
+  'message_id'
+];
+
 function table2object(table, scheme) {
   const data = {};
   for (let i = 0; i < scheme.length; ++i) {
@@ -35,6 +42,11 @@ module.exports.message = msg => {
     msg.sendChatAction(action);
   }
 
+  copied.forwardMessage = table => {
+    const data = table2object(table, forwardMessageFields)
+    msg.forwardMessage(data);
+  }
+
   // PEER
   copied.from.sendMessage = table => {
     const data = table2object(table, sendMessageFields)
@@ -44,6 +56,11 @@ module.exports.message = msg => {
   copied.from.sendChatAction = action => {
     msg.from.sendChatAction(action);
   }
+  
+  copied.from.forwardMessage = table => {
+    const data = table2object(table, forwardMessageFields)
+    msg.from.forwardMessage(data);
+  }
 
   copied.chat.sendMessage = table => {
     const data = table2object(table, sendMessageFields)
@@ -52,6 +69,11 @@ module.exports.message = msg => {
 
   copied.chat.sendChatAction = action => {
     msg.chat.sendChatAction(action);
+  }
+
+  copied.chat.forwardMessage = table => {
+    const data = table2object(table, forwardMessageFields)
+    msg.chat.forwardMessage(data);
   }
 
   return copied;

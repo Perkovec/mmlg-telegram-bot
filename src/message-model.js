@@ -15,11 +15,18 @@ class Message {
     this.sendMessage = data => {
       this.chat.sendMessage(data);
     };
-
+  
     this.sendChatAction = action => {
       this.chat.sendChatAction(action);
     };
 
+    this.forwardMessage = data => {
+      const reqData = Object.assign(data, {
+        message_id: this.message_id
+      });
+      this.chat.forwardMessage(reqData);
+    }
+    
     this.clone = () => {
       return new this.constructor(api, this);
     }

@@ -26,6 +26,10 @@ class TelegramAPI extends EventEmitter {
     this.sendChatAction = data => {
       this._callApi('sendChatAction', data);
     }
+
+    this.forwardMessage = data => {
+      this._callApi('forwardMessage', data);
+    }
   }
 
   _callApi(method, data) {

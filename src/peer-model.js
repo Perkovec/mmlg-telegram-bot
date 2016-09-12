@@ -22,6 +22,13 @@ class Peer {
       });
     };
 
+    this.forwardMessage = data => {
+      const reqData = Object.assign(data, {
+        from_chat_id: this.id,
+      });
+      api.forwardMessage(reqData);
+    }
+
     this.clone = () => {
       return new this.constructor(api, this);
     }

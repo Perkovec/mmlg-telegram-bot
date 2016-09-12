@@ -4,8 +4,8 @@ module.exports = {
   trigger: 'command',
   pattern: /^\/ping/i,
   main(msg) {
-    msg.sendMessage({
-      text: 'pong'
-    });
+    msg.forwardMessage({
+      chat_id: msg.from.id
+    })
   }
 };

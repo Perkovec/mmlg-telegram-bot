@@ -51,7 +51,10 @@ class PluginLoader {
       for (let i = 0; i < this.plugins.javascript.length; ++i) {
         const plugin = this.plugins.javascript[i];
         if (plugin.trigger === 'command' && plugin.pattern.test(msg.text)) {
-          plugin.main.call(null, msg, this._client);
+          const pluginOpts = Object.assign({}, plugin);
+          pluginOpts.matches = msg.text.match(plugin.pattern);
+          delete pluginOpts.main;
+          plugin.main.call(pluginOpts, msg, this._client);
         }
       }
 

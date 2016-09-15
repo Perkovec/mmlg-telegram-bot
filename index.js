@@ -7,7 +7,11 @@ const MMLGClient = new TelegramAPI(config.token);
 const MMLGPlugins = new PluginLoader(MMLGClient);
 
 MMLGClient.on('message', msg => {
-  MMLGPlugins.processMessage(new Message(MMLGClient, msg));
+  try {
+    MMLGPlugins.processMessage(new Message(MMLGClient, msg));
+  } catch(e) {
+    console.log(e);
+  }
 });
 
 MMLGClient.start();

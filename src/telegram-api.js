@@ -1,6 +1,16 @@
 const {EventEmitter} = require('events')
 const popsicle = require('popsicle');
 
+const APIMethods = [
+  'sendMessage',
+  'sendChatAction',
+  'forwardMessage'
+];
+
+const FormApiMethods = [
+  'sendPhoto'
+];
+
 class TelegramAPI extends EventEmitter {
   constructor(token) {
     super();
@@ -19,16 +29,12 @@ class TelegramAPI extends EventEmitter {
   }
 
   _registerEvents() {
-    this.sendMessage = data => {
-      this._callApi('sendMessage', data);
+    for (let i = 0; i < APIMethods.length; ++i) {
+      this[APIMethods[i]] = data => this._callApi(APIMethods[i], data);
     }
 
-    this.sendChatAction = data => {
-      this._callApi('sendChatAction', data);
-    }
-
-    this.forwardMessage = data => {
-      this._callApi('forwardMessage', data);
+    for (let i = 0; i < FormApiMethods.length; ++i) {
+      this[FormApiMethods[i]] = data => this._callApi(FormApiMethods[i], popsicle.form(data));
     }
   }
 
@@ -37,7 +43,7 @@ class TelegramAPI extends EventEmitter {
       method: 'POST',
       url: this._requestUrl + method,
       body: data
-    })
+    }).then(response => response.body)
   }
 
   _testToken() {

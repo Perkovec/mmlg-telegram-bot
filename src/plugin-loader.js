@@ -17,6 +17,7 @@ class PluginLoader {
 
     this._loadPlugins();
     this._clientLua = TGLuaAPI.api(client);
+    this._client = client;
   }
 
   _loadPlugins() {

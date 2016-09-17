@@ -2,13 +2,32 @@ const {EventEmitter} = require('events')
 const popsicle = require('popsicle');
 
 const APIMethods = [
+  'getMe',
   'sendMessage',
   'sendChatAction',
-  'forwardMessage'
+  'forwardMessage',
+  'sendLocation',
+  'sendVenue',
+  'sendContact',
+  'getUserProfilePhotos',
+  'getFile',
+  'kickChatMember',
+  'leaveChat',
+  'unbanChatMember',
+  'getChat',
+  'getChatAdministrators',
+  'getChatMembersCount',
+  'getChatMember',
+  'answerCallbackQuery'
 ];
 
 const FormApiMethods = [
-  'sendPhoto'
+  'sendPhoto',
+  'sendAudio',
+  'sendDocument',
+  'sendSticker',
+  'sendVideo',
+  'sendVoice'
 ];
 
 class TelegramAPI extends EventEmitter {
